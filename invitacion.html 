@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Invitación secreta</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: #000;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    /* Fondo animado de estrellas */
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: black url('https://www.transparenttextures.com/patterns/stardust.png');
+      animation: moveStars 30s linear infinite;
+      z-index: -1;
+    }
+    @keyframes moveStars {
+      from {background-position: 0 0;}
+      to {background-position: 1000px 1000px;}
+    }
+    .container {
+      text-align: center;
+      z-index: 1;
+    }
+    input {
+      margin: 10px;
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background: #e91e63;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .hidden {
+      display: none;
+    }
+    .final {
+      background: #f8a5c2;
+      color: #333;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      box-shadow: inset 0 0 20px rgba(255,255,255,0.5);
+      z-index: 1;
+    }
+    #typewriter {
+      border-right: 2px solid #333;
+      white-space: pre-wrap;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+
+  <div class="container" id="login">
+    <h2>💌 Ingresa tu alias y fecha de nacimiento</h2>
+    <input type="text" id="alias" placeholder="Alias">
+    <input type="text" id="fecha" placeholder="DD/MM/YYYY">
+    <br>
+    <button onclick="validar()">Entrar</button>
+  </div>
+
+  <div class="hidden final" id="mensaje">
+    <div id="typewriter"></div>
+  </div>
+
+  <!-- Sonido al desbloquear -->
+  <audio id="sound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+
+  <script>
+    function validar() {
+      const alias = document.getElementById('alias').value.trim().toLowerCase();
+      const fecha = document.getElementById('fecha').value.trim();
+
+      const aliasCorrecto = "loser"; 
+      const fechaCorrecta = "28/05/2004"; 
+
+      if(alias === aliasCorrecto && fecha === fechaCorrecta) {
+        document.getElementById('login').classList.add('hidden');
+        document.getElementById('mensaje').classList.remove('hidden');
+        document.getElementById('sound').play(); // Reproduce sonido
+        escribirTexto("Carolina, mi querida loser 💕\n\nQuiero que sepas que te quiero con todo mi corazón,\nque eres mi persona favorita y la razón de tantas sonrisas.\n\n🎬 Mañana iremos al cine juntos 💕");
+      } else {
+        alert("Alias o fecha incorrectos 💔");
+      }
+    }
+
+    function escribirTexto(texto) {
+      let i = 0;
+      const velocidad = 50; // milisegundos por letra
+      function escribir() {
+        if(i < texto.length) {
+          document.getElementById('typewriter').innerHTML += texto.charAt(i);
+          i++;
+          setTimeout(escribir, velocidad);
+        }
+      }
+      escribir();
+    }
+  </script>
+</body>
+</html>
