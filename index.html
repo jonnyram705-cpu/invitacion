@@ -88,10 +88,10 @@
       100% { transform: scale(1); }
     }
     .heart {
-      font-size: 40px;
+      font-size: 80px; /* más grande */
       color: red;
       animation: beat 0.6s infinite;
-      margin-top: 15px;
+      margin-top: 20px;
     }
     @keyframes beat {
       0% { transform: scale(1); }
@@ -113,7 +113,7 @@
 
   <div class="hidden final" id="mensaje">
     <div id="typewriter"></div>
-    <button id="aceptar" onclick="mostrarCorazon()">Aceptar la invitación 🎬</button>
+    <button id="aceptar" class="hidden" onclick="mostrarCorazon()">Aceptar la invitación 🎬</button>
     <div id="corazon" class="heart hidden">❤️</div>
   </div>
 
@@ -132,7 +132,7 @@
         document.getElementById('login').classList.add('hidden');
         document.getElementById('mensaje').classList.remove('hidden');
         document.getElementById('sound').play(); // Reproduce sonido
-        escribirTexto("Carolina, mi querida loser 💕\n\nEres una niña de gran corazón que merece lo mejor del mundo (aunque tú digas que no, yo sé que sí).\n\nEres lo que más quiero, y amo que seas feliz… aunque esto no me vi forzado a hacerlo por que me lo dijiste ayer, jaja.\n\nMañana iremos al cine a ver una película rancia 🎬 bueno tú fuiste quien lo propuso junto a ir a comer algo jaja.\n\nTe quiero mucho ❤️\n¿Quieres ir conmigo?");
+        escribirTexto("Carolina, mi querida loser 💕\n\nEres una niña de gran corazón que merece lo mejor del mundo (aunque tú digas que no, yo sé que sí).\n\nEres lo que más quiero, y amo que seas feliz… aunque no me vi forzado a hacer esto por que me lo dijiste ayer, jaja.\n\nMañana iremos al cine a ver una película rancia e ir a comer algo. 🎬 bueno tú fuiste quien lo propuso, pero aún así yo te invito\n\nTe quiero mucho ❤️\n¿Quieres ir conmigo?");
       } else {
         alert("Alias o fecha incorrectos 💔");
       }
@@ -146,6 +146,9 @@
           document.getElementById('typewriter').innerHTML += texto.charAt(i);
           i++;
           setTimeout(escribir, velocidad);
+        } else {
+          // Cuando termina de escribir, aparece el botón
+          document.getElementById('aceptar').classList.remove('hidden');
         }
       }
       escribir();
