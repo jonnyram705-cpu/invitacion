@@ -2,160 +2,55 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Invitación secreta</title>
+  <title>Love Forever</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: #000;
-      color: white;
+      background: black;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       overflow: hidden;
-    }
-    /* Fondo animado de estrellas */
-    .stars {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: black url('https://www.transparenttextures.com/patterns/stardust.png');
-      animation: moveStars 30s linear infinite;
-      z-index: -1;
-    }
-    @keyframes moveStars {
-      from {background-position: 0 0;}
-      to {background-position: 1000px 1000px;}
-    }
-    .container {
-      text-align: center;
-      z-index: 1;
-    }
-    input {
-      margin: 10px;
-      padding: 8px;
-      border-radius: 5px;
-      border: none;
-    }
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      background: #e91e63;
       color: white;
-      cursor: pointer;
-      font-size: 16px;
+      font-family: Arial, sans-serif;
     }
-    .hidden {
-      display: none;
-    }
-    .final {
-      background: #f8a5c2;
-      color: #333;
-      width: 100%;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      font-size: 22px;
-      font-weight: bold;
-      box-shadow: inset 0 0 20px rgba(255,255,255,0.5);
-      z-index: 1;
-    }
-    #typewriter {
-      border-right: 2px solid #333;
-      white-space: pre-wrap;
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
-    /* Botón animado */
-    #aceptar {
-      padding: 12px 25px;
-      background: #e91e63;
-      color: white;
-      border: none;
-      border-radius: 30px;
-      font-size: 18px;
-      cursor: pointer;
-      animation: pulse 1s infinite;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
+    /* Corazón girando */
     .heart {
-      font-size: 80px; /* más grande */
+      font-size: 100px;
       color: red;
-      animation: beat 0.6s infinite;
-      margin-top: 20px;
+      animation: spin 10s linear infinite;
     }
-    @keyframes beat {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.3); }
-      100% { transform: scale(1); }
+    @keyframes spin {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+    #loser {
+      font-size: 40px;
+      color: #e91e63;
+      margin-top: 20px;
+      display: none;
+      animation: fadeIn 2s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
-<body>
-  <div class="stars"></div>
+<body onclick="mostrarLoser()">
+  <div class="heart">❤️</div>
+  <div id="loser">loser</div>
 
-  <div class="container" id="login">
-    <h2>💌 Ingresa tu alias y fecha de nacimiento</h2>
-    <input type="text" id="alias" placeholder="Alias">
-    <input type="text" id="fecha" placeholder="DD/MM/YYYY">
-    <br>
-    <button onclick="validar()">Entrar</button>
-  </div>
-
-  <div class="hidden final" id="mensaje">
-    <div id="typewriter"></div>
-    <button id="aceptar" class="hidden" onclick="mostrarCorazon()">Aceptar la invitación 🎬</button>
-    <div id="corazon" class="heart hidden">❤️</div>
-  </div>
-
-  <!-- Sonido al desbloquear -->
-  <audio id="sound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+  <!-- Música de fondo -->
+  <audio id="music" autoplay loop>
+    <source src="https://archive.org/download/MassiveAttackAngel/Angel.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio.
+  </audio>
 
   <script>
-    function validar() {
-      const alias = document.getElementById('alias').value.trim().toLowerCase();
-      const fecha = document.getElementById('fecha').value.trim();
-
-      const aliasCorrecto = "loser"; 
-      const fechaCorrecta = "28/05/2004"; 
-
-      if(alias === aliasCorrecto && fecha === fechaCorrecta) {
-        document.getElementById('login').classList.add('hidden');
-        document.getElementById('mensaje').classList.remove('hidden');
-        document.getElementById('sound').play(); // Reproduce sonido
-        escribirTexto("Carolina, mi querida loser 💕\n\nEres una niña de gran corazón que merece lo mejor del mundo (aunque tú digas que no, yo sé que sí).\n\nEres lo que más quiero, y amo que seas feliz… aunque no me vi forzado a hacer esto por que me lo dijiste ayer, jaja.\n\nMañana iremos al cine a ver una película rancia e ir a comer algo. 🎬 bueno tú fuiste quien lo propuso, pero aún así yo te invito\n\nTe quiero mucho ❤️\n¿Quieres ir conmigo?");
-      } else {
-        alert("Alias o fecha incorrectos 💔");
-      }
-    }
-
-    function escribirTexto(texto) {
-      let i = 0;
-      const velocidad = 50; // milisegundos por letra
-      function escribir() {
-        if(i < texto.length) {
-          document.getElementById('typewriter').innerHTML += texto.charAt(i);
-          i++;
-          setTimeout(escribir, velocidad);
-        } else {
-          // Cuando termina de escribir, aparece el botón
-          document.getElementById('aceptar').classList.remove('hidden');
-        }
-      }
-      escribir();
-    }
-
-    function mostrarCorazon() {
-      document.getElementById('corazon').classList.remove('hidden');
+    function mostrarLoser() {
+      document.getElementById('loser').style.display = 'block';
     }
   </script>
 </body>
