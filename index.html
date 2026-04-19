@@ -7,40 +7,49 @@
     body {
       margin: 0;
       background: black;
+      overflow: hidden;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      overflow: hidden;
+      flex-direction: column;
       color: white;
       font-family: Arial, sans-serif;
     }
-    /* Corazón girando */
+    /* Corazón con texto */
     .heart {
-      font-size: 100px;
+      font-size: 20px;
       color: red;
-      animation: spin 10s linear infinite;
+      line-height: 1;
+      animation: spin 15s linear infinite;
+      transform-style: preserve-3d;
     }
     @keyframes spin {
       from { transform: rotateY(0deg); }
       to { transform: rotateY(360deg); }
     }
-    #loser {
+    /* Texto loser */
+    .loser {
+      position: absolute;
       font-size: 40px;
       color: #e91e63;
-      margin-top: 20px;
-      display: none;
-      animation: fadeIn 2s ease forwards;
+      animation: explode 1s ease forwards;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.5); }
-      to { opacity: 1; transform: scale(1); }
+    @keyframes explode {
+      0% { transform: scale(0.5); opacity: 0; }
+      50% { transform: scale(1.5); opacity: 1; color: red; }
+      100% { transform: scale(1); opacity: 0; }
     }
   </style>
 </head>
-<body onclick="mostrarLoser()">
-  <div class="heart">❤️</div>
-  <div id="loser">loser</div>
+<body onclick="crearExplosion(event)">
+  <div class="heart">
+    I love you I love you I love you I love you I love you I love you I love you I love you I love you I love you <br>
+    I love you I love you I love you I love you I love you I love you I love you I love you I love you I love you <br>
+    I love you I love you I love you I love you I love you I love you I love you I love you I love you I love you <br>
+    I love you I love you I love you I love you I love you I love you I love you I love you I love you I love you <br>
+    I love you I love you I love you I love you I love you I love you I love you I love you I love you I love you
+  </div>
 
   <!-- Música de fondo -->
   <audio id="music" autoplay loop>
@@ -49,8 +58,14 @@
   </audio>
 
   <script>
-    function mostrarLoser() {
-      document.getElementById('loser').style.display = 'block';
+    function crearExplosion(e) {
+      const loser = document.createElement("div");
+      loser.className = "loser";
+      loser.innerText = "loser";
+      loser.style.left = e.clientX + "px";
+      loser.style.top = e.clientY + "px";
+      document.body.appendChild(loser);
+      setTimeout(() => loser.remove(), 1000);
     }
   </script>
 </body>
